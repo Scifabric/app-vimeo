@@ -19,11 +19,12 @@
 import json
 from optparse import OptionParser
 import pbclient
-from get_videos import get_videos
+import videos
 
 
 def contents(filename):
     return file(filename).read()
+
 
 def handle_arguments():
     # Arguments for the application
@@ -81,6 +82,35 @@ def handle_arguments():
                       metavar="TAGS",
                       default="science")
 
+    parser.add_option("--channel",
+                      dest="channel",
+                      help="Vimeo channel to search for",
+                      metavar="CHANNEL",
+                      default="science")
+
+    parser.add_option("--channel",
+                      dest="channel",
+                      help="Vimeo channel to search for",
+                      metavar="CHANNEL",
+                      default="technolust")
+
+    parser.add_option("--group",
+                      dest="group",
+                      help="Vimeo group to search for",
+                      metavar="GROUP",
+                      default="citizenscience")
+
+    parser.add_option("--category",
+                      dest="category",
+                      help="Vimeo category to search for",
+                      metavar="CATEGORY",
+                      default="nature")
+
+    parser.add_option("--album",
+                      dest="album",
+                      help="Vimeo album to search for",
+                      metavar="ALBUM",
+                      default="craigprotzel")
 
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose")
     (options, args) = parser.parse_args()
@@ -95,6 +125,7 @@ def handle_arguments():
 
     return options
 
+
 def get_configuration():
     options = handle_arguments()
 
@@ -102,11 +133,12 @@ def get_configuration():
     try:
         with file(options.app_config) as app_json:
             app_config = json.load(app_json)
-    except IOError as e:
+    except IOError:
         print "application config file is missing! Please create a new one"
         exit(1)
 
     return (app_config, options)
+
 
 def run(app_config, options):
     def find_app_by_short_name():
@@ -132,7 +164,17 @@ def run(app_config, options):
     def add_video_tasks(app):
         # The vidoes have been pre-processed in get_videos.py, so
         # now we have the oembed object ready for creating the tasks
-        oembeds = get_videos(tags=options.tags)
+        if options.tags:
+            oembeds = videos.get_videos_tag(tags=options.tags)
+        if options.channel:
+            oembeds = videos.get_videos_channel(channel=options.channel)
+        if options.group:
+            oembeds = videos.get_videos_group(group=options.group)
+        if options.category:
+            oembeds = videos.get_videos_category(category=options.category)
+        if options.album:
+            oembeds = videos.get_videos_album(album=options.album)
+
         question = app_config['question']
         [create_video_task(app, o, question) for o in oembeds]
 
