@@ -38,7 +38,8 @@ def get_videos(per_page=20, page=1):
         for v in videos:
             req = 'http://vimeo.com/%s' % v['id']
             url = 'http://vimeo.com/api/oembed.json?url=%s' % req
-            res = requests.get(url)
+            payload = {'maxwidth': 512}
+            res = requests.get(url, params=payload)
             if res.status_code == 200:
                 oembeds.append(json.loads(res.text)['html'])
         print oembeds
