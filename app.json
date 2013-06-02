@@ -1,7 +1,7 @@
 {
-    "name": "Vimeo",
+    "name": "Vimeo Search",
     "short_name": "vimeo",
-    "thumbnail": "",
+    "thumbnail": "vimeo_logo.png",
     "description": "Help us to categorize Videos",
     "question": "Is this video showing a scientific experiment?"
 }
