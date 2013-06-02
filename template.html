@@ -1,4 +1,3 @@
-<script src="https://w.soundcloud.com/player/api.js"></script>
 <div class="row">
     <!-- Success and Error Messages for the user --> 
     <div class="span6 offset2" style="height:50px">
@@ -29,7 +28,7 @@
 </div> <!-- End of Row -->
 
 <!--
-    Task DOM for loading the Sound Cloud iframe 
+    Task DOM for loading the Vimeo iframe 
     It uses the class="skeleton" to identify the elements that belong to the
     task.
 -->
@@ -64,10 +63,10 @@
         <!-- Disqus thread for the given task -->
         <div id="disqus_thread" style="margin-top:5px;display:none"></div>
     </div><!-- End of Question and Submission DIV (column) -->
-    <div class="span6"><!-- Start of Sound Cloud DIV (column) -->
-        <div id="sound-clip">
+    <div class="span6"><!-- Start of Vimeo DIV (column) -->
+        <div id="video-clip">
         </div>
-    </div><!-- End of Sound Cloud DIV (columnt) -->
+    </div><!-- End of Vimeo DIV (columnt) -->
 </div><!-- End of Skeleton Row -->
 
 <script type="text/javascript">
@@ -105,7 +104,6 @@ function loadUserProgress() {
 
 pybossa.taskLoaded(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
-        // load image from soundcloud
         deferred.resolve(task);
     }
     else {
@@ -116,7 +114,7 @@ pybossa.taskLoaded(function(task, deferred) {
 pybossa.presentTask(function(task, deferred) {
     if ( !$.isEmptyObject(task) ) {
         loadUserProgress();
-        $('#sound-clip').html('').append(task.info.oembed);
+        $('#video-clip').html('').append(task.info.oembed);
         //$('#question').html(task.info.question);
         $('#task-id').html(task.id);
 

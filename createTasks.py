@@ -130,9 +130,9 @@ def run(app_config, options):
         pbclient.create_task(app.id, task_info)
 
     def add_video_tasks(app):
-        # First of all we get the URL photos
+        # First of all we get the URL video
         # Then, we have to create a set of tasks for the application
-        # For this, we get first the photo URLs from Flickr
+        # For this, we get first the video URLs from Vimeo
         oembeds = get_videos(tags=options.tags)
         question = app_config['question']
         [create_video_task(app, o, question) for o in oembeds]

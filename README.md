@@ -1,4 +1,4 @@
-PyBossa demo application Flickr Person
+PyBossa demo application Vimeo Person
 
 This application has three files:
 
@@ -18,12 +18,8 @@ Then, you can follow the next steps:
 *  Create an account in PyBossa
 *  Copy under your account profile your API-KEY
 *  Run python createTasks.py -u http://crowdcrafting.org -k API-KEY
-*  Open with your browser the Applications section and choose the FlickrPerson app. This will open the presenter for this demo application.
+*  Open with your browser the Applications section and choose the VimeoSearch app. This will open the presenter for this demo application.
 
 Please, check the full documentation here:
 
 http://docs.pybossa.com/en/latest/user/create-application-tutorial.html
-
-The thumbnail has been created using a photo from Sean McGrath (license CC
-BY 2.0). 
-Check the original photo here: http://www.flickr.com/photos/mcgraths/3289448299/
