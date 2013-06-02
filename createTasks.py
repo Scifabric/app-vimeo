@@ -79,32 +79,27 @@ def handle_arguments():
     parser.add_option("--tags",
                       dest="tags",
                       help="Vimeo tags to search for",
-                      metavar="TAGS",
-                      default="science")
+                      metavar="TAGS")
 
     parser.add_option("--channel",
                       dest="channel",
                       help="Vimeo channel to search for",
-                      metavar="CHANNEL",
-                      default="technolust")
+                      metavar="CHANNEL")
 
     parser.add_option("--group",
                       dest="group",
                       help="Vimeo group to search for",
-                      metavar="GROUP",
-                      default="citizenscience")
+                      metavar="GROUP")
 
     parser.add_option("--category",
                       dest="category",
                       help="Vimeo category to search for",
-                      metavar="CATEGORY",
-                      default="nature")
+                      metavar="CATEGORY")
 
     parser.add_option("--album",
                       dest="album",
                       help="Vimeo album to search for",
-                      metavar="ALBUM",
-                      default="craigprotzel")
+                      metavar="ALBUM")
 
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose")
     (options, args) = parser.parse_args()
@@ -171,7 +166,7 @@ def run(app_config, options):
         elif options.album:
             oembeds = videos.get_videos_album(album_id=options.album)
         else:
-            oembeds = videos.get_videos_tag(tags=options.tags)
+            oembeds = videos.get_videos_tag(tags='cats')
 
         question = app_config['question']
         [create_video_task(app, o, question) for o in oembeds]

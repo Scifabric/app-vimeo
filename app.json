@@ -1,7 +1,7 @@
 {
     "name": "Vimeo Search",
     "short_name": "vimeo",
-    "thumbnail": "vimeo_logo.png",
+    "thumbnail": "https://raw.github.com/PyBossa/app-vimeo/master/vimeo_icon.png",
     "description": "Help us to categorize Videos",
     "question": "Is this video showing a scientific experiment?"
 }
