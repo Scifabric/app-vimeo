@@ -118,11 +118,6 @@ pybossa.presentTask(function(task, deferred) {
         $('#video-clip').html('').append(task.info.oembed);
         $('#task-id').html(task.id);
 
-        var iframeElement   = document.querySelector('iframe');
-        console.log(iframeElement.id);
-        console.log(iframeElement);
-        var widget1         = SC.Widget(iframeElement);
-        
         $('.btn-answer').off('click').on('click', function(evt) {
             var answer = {'answer': $(evt.target).attr("value")};
             if (typeof answer != 'undefined') {
@@ -139,7 +134,6 @@ pybossa.presentTask(function(task, deferred) {
                 $("#error").show();
             }
         });
-        widget1.play();
         $("#loading").hide();
     }
     else {
