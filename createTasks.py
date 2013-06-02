@@ -75,6 +75,13 @@ def handle_arguments():
                       metavar="APP-CONFIG",
                       default="app.json")
 
+    parser.add_option("--tags",
+                      dest="tags",
+                      help="Vimeo tags to search for",
+                      metavar="TAGS",
+                      default="science")
+
+
     parser.add_option("-v", "--verbose", action="store_true", dest="verbose")
     (options, args) = parser.parse_args()
 
@@ -126,7 +133,7 @@ def run(app_config, options):
         # First of all we get the URL photos
         # Then, we have to create a set of tasks for the application
         # For this, we get first the photo URLs from Flickr
-        oembeds = get_videos()
+        oembeds = get_videos(tags=options.tags)
         question = app_config['question']
         [create_video_task(app, o, question) for o in oembeds]
 
