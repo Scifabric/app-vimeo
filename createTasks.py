@@ -159,15 +159,19 @@ def run(app_config, options):
         # The vidoes have been pre-processed in get_videos.py, so
         # now we have the oembed object ready for creating the tasks
         if options.tags:
+            print "Tags"
             oembeds = videos.get_videos_tag(tags=options.tags)
-        if options.channel:
-            oembeds = videos.get_videos_channel(channel=options.channel)
-        if options.group:
-            oembeds = videos.get_videos_group(group=options.group)
-        if options.category:
+        elif options.channel:
+            print "Channel"
+            oembeds = videos.get_videos_channel(channel_id=options.channel)
+        elif options.group:
+            oembeds = videos.get_videos_group(group_id=options.group)
+        elif options.category:
             oembeds = videos.get_videos_category(category=options.category)
-        if options.album:
-            oembeds = videos.get_videos_album(album=options.album)
+        elif options.album:
+            oembeds = videos.get_videos_album(album_id=options.album)
+        else:
+            oembeds = videos.get_videos_tag(tags=options.tags)
 
         question = app_config['question']
         [create_video_task(app, o, question) for o in oembeds]
