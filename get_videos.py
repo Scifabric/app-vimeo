@@ -21,7 +21,7 @@ import config
 import requests
 
 
-def get_videos(per_page=20, page=1):
+def get_videos(per_page=20, page=1, tags='science'):
     """
     Gets tweets for a given hashtag
     :arg string hashtag: Twitter hashtag to get the tweets
@@ -30,7 +30,7 @@ def get_videos(per_page=20, page=1):
     """
     try:
         v = vimeo.Client(key=config.CONSUMER_KEY, secret=config.CONSUMER_SECRET)
-        results = v.get('vimeo.videos.getByTag', tag='science', per_page=per_page,
+        results = v.get('vimeo.videos.getByTag', tag=tags, per_page=per_page,
                         page=page)
         results = json.loads(results)
         videos = results['videos']['video']
