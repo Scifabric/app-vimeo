@@ -86,12 +86,6 @@ def handle_arguments():
                       dest="channel",
                       help="Vimeo channel to search for",
                       metavar="CHANNEL",
-                      default="science")
-
-    parser.add_option("--channel",
-                      dest="channel",
-                      help="Vimeo channel to search for",
-                      metavar="CHANNEL",
                       default="technolust")
 
     parser.add_option("--group",
