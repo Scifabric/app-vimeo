@@ -10,3 +10,5 @@ doc/_build
 epio.ini
 .epio-app
 .epioignore
+config.py
+test.py
