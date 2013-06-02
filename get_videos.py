@@ -21,11 +21,11 @@ import config
 import requests
 
 
-def get_videos(per_page=20, page=1, tags='science'):
+def get_videos_tag(per_page=20, page=1, tags='science'):
     """
-    Gets tweets for a given hashtag
-    :arg string hashtag: Twitter hashtag to get the tweets
-    :returns: A list of Tweets.
+    Gets videos for a given tag
+    :arg string hashtag: Vimeo hashtag to get the videos
+    :returns: A list of Videos.
     :rtype: list
     """
     try:
@@ -42,7 +42,150 @@ def get_videos(per_page=20, page=1, tags='science'):
             res = requests.get(url, params=payload)
             if res.status_code == 200:
                 oembeds.append(json.loads(res.text)['html'])
-        print oembeds
+        # print oembeds
+        return oembeds
+    except:
+        raise
+        raise Exception("config.py file not found, please copy config.py.template \
+                        to config.py and fill in the OAuth parameters")
+
+
+def get_videos_channel(per_page=20, page=1, channel_id='technolust'):
+    """
+    Gets videos for a given channel
+    :arg string channel id: Vimeo channel id to get the videos
+    :returns: A list of Videos.
+    :rtype: list
+    """
+    try:
+        v = vimeo.Client(key=config.CONSUMER_KEY, secret=config.CONSUMER_SECRET)
+        results = v.get('vimeo.channels.getVideos', channel_id=channel_id, per_page=per_page,
+                        page=page)
+        results = json.loads(results)
+        videos = results['videos']['video']
+        oembeds = []
+        for v in videos:
+            req = 'http://vimeo.com/%s' % v['id']
+            url = 'http://vimeo.com/api/oembed.json?url=%s' % req
+            payload = {'maxwidth': 512}
+            res = requests.get(url, params=payload)
+            if res.status_code == 200:
+                oembeds.append(json.loads(res.text)['html'])
+        # print oembeds
+        return oembeds
+    except:
+        raise
+        raise Exception("config.py file not found, please copy config.py.template \
+                        to config.py and fill in the OAuth parameters")
+
+
+def get_videos_group(per_page=20, page=1, group_id='science'):
+    """
+    Gets videos for a given group
+    :arg string channel id: Vimeo group id to get the videos
+    :returns: A list of Videos.
+    :rtype: list
+    """
+    try:
+        v = vimeo.Client(key=config.CONSUMER_KEY, secret=config.CONSUMER_SECRET)
+        results = v.get('vimeo.groups.getVideos', group_id=group_id, per_page=per_page,
+                        page=page)
+        results = json.loads(results)
+        videos = results['videos']['video']
+        oembeds = []
+        for v in videos:
+            req = 'http://vimeo.com/%s' % v['id']
+            url = 'http://vimeo.com/api/oembed.json?url=%s' % req
+            payload = {'maxwidth': 512}
+            res = requests.get(url, params=payload)
+            if res.status_code == 200:
+                oembeds.append(json.loads(res.text)['html'])
+        # print oembeds
+        return oembeds
+    except:
+        raise
+        raise Exception("config.py file not found, please copy config.py.template \
+                        to config.py and fill in the OAuth parameters")
+
+def get_videos_category(per_page=20, page=1, category='nature'):
+    """
+    Gets videos for a given group
+    :arg string channel id: Vimeo group id to get the videos
+    :returns: A list of Videos.
+    :rtype: list
+    """
+    try:
+        v = vimeo.Client(key=config.CONSUMER_KEY, secret=config.CONSUMER_SECRET)
+        results = v.get('vimeo.categories.getRelatedVideos', category=category, per_page=per_page,
+                        page=page)
+        results = json.loads(results)
+        videos = results['videos']['video']
+        oembeds = []
+        for v in videos:
+            req = 'http://vimeo.com/%s' % v['id']
+            url = 'http://vimeo.com/api/oembed.json?url=%s' % req
+            payload = {'maxwidth': 512}
+            res = requests.get(url, params=payload)
+            if res.status_code == 200:
+                oembeds.append(json.loads(res.text)['html'])
+        # print oembeds
+        return oembeds
+    except:
+        raise
+        raise Exception("config.py file not found, please copy config.py.template \
+                        to config.py and fill in the OAuth parameters")
+
+
+def get_videos_user_tag(per_page=20, page=1, user_id='craigprotzel', tag='itp'):
+    """
+    Gets videos for a given user and tag
+    :arg string channel id: Vimeo user and tag id to get the videos
+    :returns: A list of Videos.
+    :rtype: list
+    """
+    try:
+        v = vimeo.Client(key=config.CONSUMER_KEY, secret=config.CONSUMER_SECRET)
+        results = v.get('vimeo.videos.search', user_id=user_id, query=tag, per_page=per_page,
+                        page=page)
+        results = json.loads(results)
+        videos = results['videos']['video']
+        oembeds = []
+        for v in videos:
+            req = 'http://vimeo.com/%s' % v['id']
+            url = 'http://vimeo.com/api/oembed.json?url=%s' % req
+            payload = {'maxwidth': 512}
+            res = requests.get(url, params=payload)
+            if res.status_code == 200:
+                oembeds.append(json.loads(res.text)['html'])
+        # print oembeds
+        return oembeds
+    except:
+        raise
+        raise Exception("config.py file not found, please copy config.py.template \
+                        to config.py and fill in the OAuth parameters")
+
+def get_videos_album(per_page=20, page=1, album_id='1659487'):
+    """
+    Gets videos for a given album
+    :arg string channel id: Vimeo group id to get the videos
+    :returns: A list of Videos.
+    :rtype: list
+    """
+    try:
+        v = vimeo.Client(key=config.CONSUMER_KEY, secret=config.CONSUMER_SECRET)
+        results = v.get('vimeo.albums.getVideos', album_id=album_id, per_page=per_page,
+                        page=page)
+        results = json.loads(results)
+        videos = results['videos']['video']
+        oembeds = []
+        for v in videos:
+            req = 'http://vimeo.com/%s' % v['id']
+            url = 'http://vimeo.com/api/oembed.json?url=%s' % req
+            payload = {'maxwidth': 512}
+            res = requests.get(url, params=payload)
+            if res.status_code == 200:
+                oembeds.append(json.loads(res.text)['html'])
+        # print oembeds
         return oembeds
     except:
         raise
