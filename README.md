@@ -20,10 +20,14 @@ Testing the application
 You need to install the pybossa-client and vimeo first (use a virtualenv):
 
 ```bash
-    $ pip install pybossa-client
-    $ pip install vimeo
+    $ pip install -r requirements.txt
 ```
-Then, you can follow the next steps:
+
+As this application uses Vimeo for getting the videos, you need to create an
+application in the [Vimeo developers site](https://developer.vimeo.com/). Once
+you have the developer keys, just copy and paste them into a file named
+**config.py** (just copy the file **config.py.tmpl** and rename it). Then, you 
+can follow the next steps:
 
 *  Create an account in PyBossa
 *  Copy under your account profile your API-KEY
