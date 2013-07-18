@@ -17,7 +17,9 @@
 # along with PyBOSSA.  If not, see <http://www.gnu.org/licenses/>.
 
 import json
+import logging
 from optparse import OptionParser
+from requests import exceptions
 import pbclient
 import videos
 
@@ -130,8 +132,28 @@ def get_configuration():
 
 
 def run(app_config, options):
+    def check_api_error(api_response):
+        """Check if returned API response contains an error"""
+        if type(api_response) == dict and (api_response.get('status') == 'failed'):
+            raise exceptions.HTTPError
+
+    def format_error(module, error):
+        """Format the error for the given module"""
+        logging.error(module)
+        # Beautify JSON error
+        if type(error) == list:
+            print "Application not found"
+        else:
+            print json.dumps(error, sort_keys=True, indent=4, separators=(',', ': '))
+        exit(1)
+
     def find_app_by_short_name():
-        return pbclient.find_app(short_name=app_config['short_name'])[0]
+        try:
+            response = pbclient.find_app(short_name=app_config['short_name'])
+            check_api_error(response)
+            return response[0]
+        except:
+            format_error("pbclient.find_app", response)
 
     def setup_app():
         app = find_app_by_short_name()
@@ -140,15 +162,23 @@ def run(app_config, options):
         app.info['thumbnail'] = app_config['thumbnail']
         app.info['tutorial'] = contents('tutorial.html')
 
-        pbclient.update_app(app)
-        return app
+        try:
+            response = pbclient.update_app(app)
+            check_api_error(response)
+            return app
+        except:
+            format_error("pbclient.update_app", response)
 
     def create_video_task(app, oembed, question):
         # Data for the tasks
         task_info = dict(question=question,
                          n_answers=options.n_answers,
                          oembed=oembed)
-        pbclient.create_task(app.id, task_info)
+        try:
+            response = pbclient.create_task(app.id, task_info)
+            check_api_error(response)
+        except:
+            format_error("pbclient.create_task", response)
 
     def add_video_tasks(app):
         # The vidoes have been pre-processed in get_videos.py, so
@@ -180,11 +210,14 @@ def run(app_config, options):
 
     if options.create_app or options.add_more_tasks:
         if options.create_app:
-            pbclient.create_app(app_config['name'],
-                                app_config['short_name'],
-                                app_config['description'])
-
-            app = setup_app()
+            try:
+                response = pbclient.create_app(app_config['name'],
+                                               app_config['short_name'],
+                                               app_config['description'])
+                check_api_error(response)
+                app = setup_app()
+            except:
+                format_error("pbclient.create_app", response)
         else:
             app = find_app_by_short_name()
         add_video_tasks(app)
@@ -199,20 +232,28 @@ def run(app_config, options):
             offset = 0
             limit = 100
             while True:
-                tasks = pbclient.get_tasks(app.id, offset=offset, limit=limit)
-                if len(tasks) == 0:
-                    break
-                for task in tasks:
-                    yield task
-                offset += len(tasks)
+                try:
+                    tasks = pbclient.get_tasks(app.id, offset=offset, limit=limit)
+                    check_api_error(tasks)
+                    if len(tasks) == 0:
+                        break
+                    for task in tasks:
+                        yield task
+                    offset += len(tasks)
+                except:
+                    format_error("pbclient.get_tasks", tasks)
 
         def update_task(task, count):
             print "Updating task: %s" % task.id
             if 'n_answers' in task.info:
                 del(task.info['n_answers'])
             task.n_answers = options.update_tasks
-            pbclient.update_task(task)
-            count[0] += 1
+            try:
+                response = pbclient.update_task(task)
+                check_api_error(response)
+                count[0] += 1
+            except:
+                format_error("pbclient.update_task", response)
 
         print "Updating task n_answers"
         app = find_app_by_short_name()
