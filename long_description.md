@@ -22,12 +22,11 @@ The application provides three simple answers as action buttons:
 Based on the answer of the users, we will be able to classify the videos,
 distributing the tasks (thanks to PyBossa) to different users and volunteers.
 
-__ Note If you want to learn more about how to use this application as a
+**Note:** If you want to learn more about how to use this application as a
 template, check the:
 
   * [source code](http://github.com/PyBossa/app-vimeo)
   * [the official documentation of PyBossa](http://docs.pybossa.com/) and 
   * [the step by step tutorial.](http://docs.pybossa.com/en/latest/user/tutorial.html)
 
-* * *
-
+***
