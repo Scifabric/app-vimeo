@@ -26,7 +26,7 @@ You need to install the pybossa-pbs and vimeo first (use a virtualenv):
 As this project uses Vimeo for getting the videos, you need to create an
 application in the [Vimeo developers site](https://developer.vimeo.com/). Once
 you have the developer keys, just copy and paste them into a file named
-**config.py** (just copy the file **config.py.tmpl** and rename it). Then, you 
+**config.py** (just copy the file **config.py.template** and rename it). Then, you 
 can follow the next steps:
 
 *  Create an account in PyBossa
