@@ -9,6 +9,8 @@ get videos from channels, categories, tags, etc.
 
 This project has three files:
 
+*  project.json: a JSON file that describes the project.
+*  long_description.md: a Markdown file with a long description of the project.
 *  videos.py: for getting videos for the PyBossa project, and use them as tasks.
 *  template.html: the view for every task and deal with the data of the answers.
 *  tutorial.html: a simple tutorial for the volunteers.
@@ -17,7 +19,13 @@ This project has three files:
 Testing the project
 ===================
 
-You need to install the pybossa-pbs and vimeo first (use a virtualenv):
+You need to install the pybossa-pbs and the vimeo client libraries. Use of
+a virtual environment is recommended:
+
+```bash
+    $ virtualenv env
+    $ source env/bin/activate
+```
 
 ```bash
     $ pip install -r requirements.txt
@@ -27,15 +35,45 @@ As this project uses Vimeo for getting the videos, you need to create an
 application in the [Vimeo developers site](https://developer.vimeo.com/). Once
 you have the developer keys, just copy and paste them into a file named
 **config.py** (just copy the file **config.py.template** and rename it). Then, you 
-can follow the next steps:
+can follow the next steps.
 
-*  Create an account in PyBossa
-*  Copy under your account profile your API-KEY
+## Creating an account in a PyBossa server
+Now that you've all the requirements installed in your system, you need
+a PyBossa account:
 
-Then you can create the project:
+*  Create an account in your PyBossa server (use [Crowdcrafting](https://crowdcrafting.org) if you want).
+*  Copy your API-KEY (you can find it in your profile page).
+
+## Configure pybossa-pbs command line
+
+PyBossa-pbs command line tool can be configured with a config file in order to
+avoid typing the API-KEY and the server every time you want to take an action
+on your project. For this reason, we recommend you to actually create the
+config file. For creating the file, follow the next steps:
 
 ```bash
-    $ pbs --server server --apikey yourkey create_project
+    $ cd ~
+    $ editorofyourchoice .pybossa.cfg
+```
+
+That will create a file. Now paste the following:
+
+```ini
+[default]
+server: http://yourpybossaserver.com
+apikey: yourapikey
+``` 
+
+Save the file, and you are done! From now on, pybossa-pbs will always use the
+default section to run your commands.
+
+## Create the project
+
+Now that we've everything in place, creating the project is as simple as
+running this command:
+
+```bash
+    $ pbs create_project
 ```
 
 ## Adding tasks
@@ -56,9 +94,25 @@ videos.
 Now, that we have the tasks ready, we only have to add them to our project:
 
 ```bash
-    $ pbs add_tasks --tasks-file=video_tasks_from_tags.json --tasks-type=json
+    $ pbs add_tasks --tasks-file=video_tasks_from_tags.json
 ```
 Done!
+
+## Finally, add the task presenter, tutorial and long description
+
+Now that we've some data to process, let's add to our project the required
+templates to show a better description of our project, to present the tasks to
+our users, and a small tutorial for the volunteers:
+
+```bash
+    $ pbs update_project
+```
+
+Done! Now you can do video pattern recognition problems in the PyBossa server.
+
+**NOTE**: we provide templates also for Bootstrap v2 in case your PyBossa
+server is using Bootstrap 2 instead of Bootstrap 3. See the rest of the files.
+
 
 
 Documentation
@@ -66,7 +120,7 @@ Documentation
 
 We recommend that you read the section: [Build with PyBossa](http://docs.pybossa.com/en/latest/build_with_pybossa.html) and follow the [step by step tutorial](http://docs.pybossa.com/en/latest/user/tutorial.html).
 
-**NOTE**: This application uses the [pybossa-pbs](https://pypi.python.org/pypi/pybossa-pbs) in order to simplify the development of the project and its usage. Check the [documentation](http://docs.pybossa.com/en/latest/user/pbs.html).
+**NOTE**: This application uses the [pybossa-pbs](https://pypi.python.org/pypi/pybossa-pbs) library in order to simplify the development of the project and its usage. Check the [documentation](http://docs.pybossa.com/en/latest/user/pbs.html).
 
 
 LICENSE
